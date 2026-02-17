@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: PersonGW
+
+  security:
+    user:
+      name: user_gw
+      password: qwer1234
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+          - id: cud
+            uri: http://localhost:8091
+            predicates:
+            - Path=/api/people-cud/**
+            filters:
+            - SetRequestHeader=Authorization, Basic ${downstream.security.basic-auth.cud}
+
+          - id: query
+            uri: http://localhost:8092
+            predicates:
+            - Path=/api/people-query/**
+            filters:
+            - SetRequestHeader=Authorization, Basic ${downstream.security.basic-auth.query}
+
+          default-filters:
+          - StripPrefix=2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - info
+        - health
+
+server:
+  port: 8080
+  #forward-headers-strategy: framework
+
+springdoc:
+  show-actuator: true
+  swagger-ui:
+    path: '/swagger-ui.html'
+
+logging:
+  level:
+    root: info
+
+downstream:
+  swagger-central:
+    server:
+      uri: http://localhost:8090 
+  security:
+    basic-auth: 
+      cud: dXNlcl9wZXJzb25fY3VkOmFzZGYxMjM0
+      query: dXNlcl9wZXJzb25fcXVlcnk6YXNkZjEyMzQ= 

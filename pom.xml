@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>in.n4smh.microservices</groupId>
+		<artifactId>parent-pom</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>in.n4smh.microservices.person</groupId>
+	<artifactId>gw</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>PersonGW</name>
+	<description>Gateway for Person APIs</description>
+
+	<properties>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway-server-webflux</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+		<!-- Start: Spring Security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<!-- End -->
+		
+		<!--Start: Swagger -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+			<version>${springdoc-openapi.version}</version>
+		</dependency>
+		<!-- End -->
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<name>
+							${nexus-docker-path}${project.artifactId}:${project.version}
+						</name>
+						<publish>true</publish>
+					</image>
+					<docker>
+						<builderRegistry>
+							<username>${nexus-ci-user}</username>
+							<password>${nexus-ci-password}</password>
+							<url>${nexus-docker-host}</url>
+						</builderRegistry>
+					</docker>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
