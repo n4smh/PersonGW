@@ -1,0 +1,24 @@
+person:
+  swagger-enabled: false
+  logging-pattern-correlation: "[ %X{traceId:-} %X{spanId:-} ] "
+
+  otlp-metrics-uri: http://localhost:4318/v1/metrics
+  otlp-logging-uri: http://localhost:4318/v1/logs
+  otlp-tracing-uri: http://localhost:4318/v1/traces
+  otlp-tracing-sampling-probability: 1.0
+
+  gw:
+    name: PersonGW
+    port: 8080
+    security-user-name: user_person_gw_prod
+    security-user-password: prod1234
+
+  cud:
+    context: cud
+    uri: http://localhost:8091
+    security-auth: Basic dXNlcl9wZXJzb25fcHJvZDpwcm9kMTIzNA==
+
+  query:
+    context: query
+    uri: http://localhost:8092
+    security-auth: Basic dXNlcl9wZXJzb25fcHJvZDpwcm9kMTIzNA==

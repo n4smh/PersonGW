@@ -3,7 +3,7 @@ package in.n4smh.microservices.person.gw;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "in.n4smh.microservices")
+@SpringBootApplication(scanBasePackages = "in.n4smh.microservices.person")
 public class PersonGwApplication {
 
 	public static void main(String[] args) {
