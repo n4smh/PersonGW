@@ -1,30 +1,30 @@
 spring:
   application:
-    name: PersonGW
+    name: ${person.gw.name}
 
   security:
     user:
-      name: user_gw
-      password: qwer1234
+      name: ${person.gw.security-user-name}
+      password: ${person.gw.security-user-password}
 
   cloud:
     gateway:
       server:
         webflux:
           routes:
-          - id: cud
-            uri: http://localhost:8091
+          - id: ${person.cud.context}
+            uri: ${person.cud.uri}
             predicates:
-            - Path=/api/people-cud/**
+            - Path=/api/people-${person.cud.context}/**
             filters:
-            - SetRequestHeader=Authorization, Basic ${downstream.security.basic-auth.cud}
+            - SetRequestHeader=Authorization, ${person.cud.security-auth}
 
-          - id: query
-            uri: http://localhost:8092
+          - id: ${person.query.context}
+            uri: ${person.query.uri}
             predicates:
-            - Path=/api/people-query/**
+            - Path=/api/people-${person.query.context}/**
             filters:
-            - SetRequestHeader=Authorization, Basic ${downstream.security.basic-auth.query}
+            - SetRequestHeader=Authorization, ${person.query.security-auth}
 
           default-filters:
           - StripPrefix=2
@@ -37,24 +37,16 @@ management:
         - info
         - health
 
-server:
-  port: 8080
-  #forward-headers-strategy: framework
+logging:
+  pattern:
+    correlation: ${person.logging-pattern-correlation}
 
 springdoc:
   show-actuator: true
   swagger-ui:
-    path: '/swagger-ui.html'
+    enabled: ${person.swagger-enabled}
+  api-docs:
+    enabled: ${person.swagger-enabled}
 
-logging:
-  level:
-    root: info
-
-downstream:
-  swagger-central:
-    server:
-      uri: http://localhost:8090 
-  security:
-    basic-auth: 
-      cud: dXNlcl9wZXJzb25fY3VkOmFzZGYxMjM0
-      query: dXNlcl9wZXJzb25fcXVlcnk6YXNkZjEyMzQ= 
+server:
+  port: ${person.gw.port}
