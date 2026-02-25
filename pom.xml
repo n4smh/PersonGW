@@ -53,19 +53,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<image>
-						<name>
-							${nexus-docker-path}${project.artifactId}:${project.version}
-						</name>
-						<publish>true</publish>
-					</image>
-					<docker>
-						<builderRegistry>
-							<username>${nexus-ci-user}</username>
-							<password>${nexus-ci-password}</password>
-							<url>${nexus-docker-host}</url>
-						</builderRegistry>
-					</docker>
+					<skip>false</skip> <!-- DO repackage as boot app -->
 				</configuration>
 			</plugin>
 		</plugins>
