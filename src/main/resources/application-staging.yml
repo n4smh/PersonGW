@@ -8,7 +8,7 @@ person:
   otlp-tracing-sampling-probability: 1.0
 
   gw:
-    name: PersonGW
+    name: person-gw
     port: 8080
     security-user-name: user_person_gw_staging
     security-user-password: staging1234
